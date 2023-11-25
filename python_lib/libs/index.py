@@ -1,7 +1,7 @@
 
 import sys
 
-from codecs import Codecs
+from codecs import Codec
 from languags import Languages
 from provider import getProvider
 from sever import getServer
@@ -11,7 +11,7 @@ argv = {
 	"port": 9099
 }
 
-codecs = Codecs(argv)
+codecs = Codec(argv)
 languages = Languages(argv)
 server = getServer("ws", argv)
 
@@ -36,7 +36,7 @@ def on_sigterm():
 signal.signal(signal.SIGINT, on_sigint)
 signal.signal(signal.SIGTERM, on_sigterm)
 
-server.listen(argv["port"])
+server.start(argv["port"])
 
 
 

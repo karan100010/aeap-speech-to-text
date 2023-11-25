@@ -38,6 +38,8 @@ class WSServer:
 
 	def on_message(self, message: Any, is_binary: bool) -> None:
 		# Trigger message event
+		asyncio.ensure_future(self.message(message, is_binary))
+		
 		pass
 
 	def send(self, data: Any, binary: bool = False) -> None:
@@ -58,4 +60,4 @@ def get_server(name: str, options: Optional[Dict[str, Any]] = None) -> Any:
 		return WSServer(options)
 	raise ValueError(f"Unsupported server type '{name}'")
 
-# END: ed8c6549bwf9
+

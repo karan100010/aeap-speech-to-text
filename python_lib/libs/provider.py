@@ -1,5 +1,5 @@
-# FILEPATH: /c:/Users/karan/aeap-speech-to-text/lib/provider.py
-# BEGIN: ed8c6549bwf9
+import speech_recognition as sr
+
 DEFAULT_ENCODING = "MULAW"
 DEFAULT_SAMPLE_RATE = 8000
 DEFAULT_LANGUAGE = "en-US"
@@ -30,7 +30,6 @@ class GoogleProvider:
 		self.recognizeStream = None
 
 	def _construct(self, callback):
-		self.client = speech.SpeechClient()
 		callback()
 
 	def _write(self, chunk, encoding, callback):
@@ -45,7 +44,6 @@ class GoogleProvider:
 
 	def _final(self, callback):
 		self.stop()
-		self.client.close()
 		callback()
 
 	def setConfig(self, config):
@@ -74,47 +72,40 @@ class GoogleProvider:
 		self.setConfig(config)
 		config = self.config
 
-		request = {
-			"config": config,
-			"interimResults": True
-		}
+		self.recognizeStream = sr.Recognizer()
+		self.recognizeStream.pause_threshold = 0.5
+		self.recognizeStream.phrase_threshold = 0.3
+		self.recognizeStream.non_speaking_duration = 0.2
 
-		self.recognizeStream = self.client.streaming_recognize(request)
 		self.recognizeStream.on("error", lambda e: print("GoogleProvider: " + str(e) + " - ending stream"))
-		self.recognizeStream.on("data", lambda response: self._handle_response(response))
 
-		if self.restartTimeout:
-			self.restartTimer = Timer(self.restartTimeout, self.restart)
-			self.restartTimer.start()
+		with sr.Microphone() as source:
+			print("Listening...")
+			audio = self.recognizeStream.listen(source)
+
+		try:
+			text = self.recognizeStream.recognize_google(audio, language=config["languageCode"])
+			print("GoogleProvider: result: " + text)
+			result = {
+				"text": text,
+				"score": 100
+			}
+			self.results.append(result)
+
+			if len(self.results) == self.maxResults:
+				self.results.pop(0)
+
+		except sr.UnknownValueError:
+			print("GoogleProvider: Unable to recognize speech")
 
 	def stop(self):
-		if self.restartTimer:
-			self.restartTimer.cancel()
-			self.restartTimer = None
-
-		if not self.recognizeStream:
-			return
-
-		self.recognizeStream.end()
-		self.recognizeStream = None
+		if self.recognizeStream:
+			self.recognizeStream.stop()
+			self.recognizeStream = None
 
 	def restart(self, config):
 		self.stop()
 		self.start(config)
 
 	def _handle_response(self, response):
-		if response.results and response.results[0].alternatives:
-			if response.results[0].alternatives[0].confidence == 0:
-				return
-
-			result = {
-				"text": response.results[0].alternatives[0].transcript,
-				"score": round(response.results[0].alternatives[0].confidence * 100)
-			}
-
-			print("GoogleProvider: result: " + str(result))
-			self.results.append(result)
-
-			if len(self.results) == self.maxResults:
-				self.results.pop(0)
-
+		pass
