@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+
 
 /*
  * Copyright 2022 Sangoma Technologies Corporation
@@ -59,5 +59,3 @@ process.on("SIGTERM", () => {
 	server.close();
 	process.exit(0);
 });
-
-
