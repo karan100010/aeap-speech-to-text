@@ -36,5 +36,7 @@ def on_sigterm():
 signal.signal(signal.SIGINT, on_sigint)
 signal.signal(signal.SIGTERM, on_sigterm)
 
+server.listen(argv["port"])
+
 
 
