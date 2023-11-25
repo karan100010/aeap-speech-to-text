@@ -2,7 +2,7 @@
 import sys
 
 from codecs import Codec
-from languags import Languages
+from languages import Languages
 from provider import getProvider
 from sever import getServer
 from dispatch import dispatch
