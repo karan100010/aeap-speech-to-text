@@ -1,6 +1,7 @@
 import asyncio
 # BEGIN: ed8c6549bwf9
 from typing import Dict, Any, Optional
+import websockets
 
 """
 For server accepting clients implementer.
@@ -41,6 +42,7 @@ class WSServer:
 		asyncio.ensure_future(self.message(message, is_binary))
 		
 		pass
+
 
 	def send(self, data: Any, binary: bool = False) -> None:
 		for client in self.clients:
