@@ -15,7 +15,7 @@ def convert_ulaw_to_wave():
   
     print(type(ulaw_fragments))
     #writ ulaw_fragments to a json file
-    convert_ulaw_to_wave(ulaw_fragments)
+    convert_file(ulaw_fragments)
 
 #x= {'type': 'Buffer', 'data': [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]} 
   
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     #run on port 5005
     app.run(host='localhost', port=5005)
 
-def convert_ulaw_to_wave(file):
+def convert_file(file):
     # Decode and combine u-law fragments into a single bytearray
     combined_pcm_data = bytearray()
     ulaw_data = bytes(file['data']['data'])
