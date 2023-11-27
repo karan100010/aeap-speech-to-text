@@ -11,7 +11,8 @@ def convert_ulaw_to_wave():
         chunks = request.iter_chunks()
         for chunk in chunks:
             ulaw_data += chunk
-        print(f'ulaw_data: {ulaw_data}')
+            print(chunk)
+        print(ulaw_data)
 
         # make ulaw ready to be written to a file
         wave_data = audioop.ulaw2lin(ulaw_data, 1)
