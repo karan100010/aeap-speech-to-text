@@ -7,8 +7,11 @@ app = Flask(__name__)
 @app.route('/convert', methods=['POST'])
 def convert_ulaw_to_wave():
     try:
-        ulaw_data = request.stream.read()
-        print(ulaw_data)
+        ulaw_data = b''
+        chunks = request.iter_chunks()
+        for chunk in chunks:
+            ulaw_data += chunk
+
         # make ulaw ready to be written to a file
         wave_data = audioop.ulaw2lin(ulaw_data, 2)
 
