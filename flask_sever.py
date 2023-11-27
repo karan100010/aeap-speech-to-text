@@ -9,8 +9,7 @@ def convert_ulaw_to_wave():
     print(ulaw_data)
 
     # Convert ulaw data to wave format
-    wave_data = convert_ulaw_to_wave()
-
+    wave_data = ulaw_data.decode('base64')
     # Save wave data to a file
     with wave.open('output.wav', 'wb') as wave_file:
         wave_file.setnchannels(1)  # Mono
