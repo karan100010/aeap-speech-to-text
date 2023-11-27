@@ -11,16 +11,17 @@ def convert_ulaw_to_wave():
         chunks = request.iter_chunks()
         for chunk in chunks:
             ulaw_data += chunk
+        print(f'ulaw_data: {ulaw_data}')
 
         # make ulaw ready to be written to a file
-        wave_data = audioop.ulaw2lin(ulaw_data, 2)
+        wave_data = audioop.ulaw2lin(ulaw_data, 1)
 
         # Save wave data to a file
         with wave.open('output.wav', 'wb') as wave_file:
             wave_file.setnchannels(1)  # Mono
             wave_file.setsampwidth(1)  # 16-bit
             wave_file.setframerate(8000)  # Sample rate
-            wave_file.writeframes(wave_data)
+            wave_file.writeframes(ulaw_data)
 
         return 'Conversion successful'
     except Exception as e:
