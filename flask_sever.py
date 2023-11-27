@@ -1,7 +1,7 @@
 from flask import Flask, request
 import wave
 import audioop
-
+import json
 app = Flask(__name__)
 
 @app.route('/convert', methods=['POST'])
@@ -14,6 +14,12 @@ def convert_ulaw_to_wave():
     #convert ulaw_fragment variable to a array
   
     print(type(ulaw_fragments))
+    #writ ulaw_fragments to a json file
+    with open('data.json', 'w') as outfile:
+        json.dump(ulaw_fragments, outfile)
+
+
+#x= {'type': 'Buffer', 'data': [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]} 
   
     # # Decode and combine u-law fragments into a single bytearray
     # combined_pcm_data = bytearray()
