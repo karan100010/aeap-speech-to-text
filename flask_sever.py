@@ -19,15 +19,15 @@ def convert_ulaw_to_wave():
 
     # Now `combined_pcm_data` contains the PCM data from all the u-law fragments
 
-# Save the combined PCM data to a WAV file
-with wave.open('output.wav', 'wb') as wf:
-    wf.setnchannels(1)  # Adjust based on the number of channels in your audio
-    wf.setsampwidth(2)  # 2 bytes for 16-bit audio
-    wf.setframerate(8000)  # Adjust based on the sample rate of your u-law audio
-    wf.writeframes(combined_pcm_data)
+    # Save the combined PCM data to a WAV file
+    with wave.open('output.wav', 'wb') as wf:
+        wf.setnchannels(1)  # Adjust based on the number of channels in your audio
+        wf.setsampwidth(2)  # 2 bytes for 16-bit audio
+        wf.setframerate(8000)  # Adjust based on the sample rate of your u-law audio
+        wf.writeframes(combined_pcm_data)
 
 
-    return 'Conversion successful'
+        return 'Conversion successful'
     
 
 
