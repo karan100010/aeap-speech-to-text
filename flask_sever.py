@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/convert', methods=['POST'])
 def convert_ulaw_to_wave():
     ulaw_data = request.stream.read()
+    print(ulaw_data)
 
     # Convert ulaw data to wave format
     wave_data = convert_ulaw_to_wave(ulaw_data)
