@@ -9,7 +9,7 @@ def convert_ulaw_to_wave():
 
 
 # Assuming you have an array of u-law encoded fragments
-    ulaw_fragments = request.data()
+    ulaw_fragments = request.data
     # Decode and combine u-law fragments into a single bytearray
     combined_pcm_data = bytearray()
     for ulaw_fragment in ulaw_fragments:
