@@ -13,7 +13,7 @@ def convert_ulaw_to_wave():
     #convert ulaw_fragment variable to a array
   
     print(type(ulaw_fragments))
-    print(ulaw_fragments)
+    print(dict(ulaw_fragments)[""])
     # # Decode and combine u-law fragments into a single bytearray
     # combined_pcm_data = bytearray()
     # for ulaw_fragment in ulaw_fragments:
