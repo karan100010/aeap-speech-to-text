@@ -30,7 +30,7 @@ def convert_ulaw_to_wave():
     #     wf.writeframes(combined_pcm_data)
 
 
-    #     return 'Conversion successful'
+    return 'Conversion successful'
     
 
 
