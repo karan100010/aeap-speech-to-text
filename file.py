@@ -6,7 +6,7 @@ import audioop
 def convert_ulaw_to_wave(x):
     # Decode and combine u-law fragments into a single bytearray
     combined_pcm_data = bytearray()
-    ulaw_data = bytes(x['data'])
+    ulaw_data = bytes(x['data']['data'])
 
 
     # Decode the u-law data to 16-bit linear PCM
