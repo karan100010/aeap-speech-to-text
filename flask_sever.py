@@ -6,28 +6,30 @@ app = Flask(__name__)
 
 @app.route('/convert', methods=['POST'])
 def convert_ulaw_to_wave():
-    try:
-        ulaw_data = b''
-        chunks = request.iter_chunks()
-        print(chunks)
-        for chunk in chunks:
-            ulaw_data += chunk
-            print(chunk)
-        print(ulaw_data)
 
-        # make ulaw ready to be written to a file
-        wave_data = audioop.ulaw2lin(ulaw_data, 1)
 
-        # Save wave data to a file
-        with wave.open('output.wav', 'wb') as wave_file:
-            wave_file.setnchannels(1)  # Mono
-            wave_file.setsampwidth(1)  # 16-bit
-            wave_file.setframerate(8000)  # Sample rate
-            wave_file.writeframes(ulaw_data)
+# Assuming you have an array of u-law encoded fragments
+    ulaw_fragments = request.data()
+    # Decode and combine u-law fragments into a single bytearray
+    combined_pcm_data = bytearray()
+    for ulaw_fragment in ulaw_fragments:
+        pcm_fragment, _ = audioop.ulaw2lin(ulaw_fragment, 2)  # 2 is the sample width (16 bits)
+        combined_pcm_data.extend(pcm_fragment)
+    print(combined_pcm_data)
 
-        return 'Conversion successful'
-    except Exception as e:
-        return f'Conversion failed: {str(e)}'
+    # Now `combined_pcm_data` contains the PCM data from all the u-law fragments
+
+# Save the combined PCM data to a WAV file
+with wave.open('output.wav', 'wb') as wf:
+    wf.setnchannels(1)  # Adjust based on the number of channels in your audio
+    wf.setsampwidth(2)  # 2 bytes for 16-bit audio
+    wf.setframerate(8000)  # Adjust based on the sample rate of your u-law audio
+    wf.writeframes(combined_pcm_data)
+
+
+    return 'Conversion successful'
+    
+
 
 
 
