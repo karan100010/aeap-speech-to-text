@@ -1,23 +1,28 @@
 from flask import Flask, request
 import wave
+import audioop
 
 app = Flask(__name__)
 
 @app.route('/convert', methods=['POST'])
 def convert_ulaw_to_wave():
-    ulaw_data = request.stream.read()
-    print(ulaw_data)
+    try:
+        ulaw_data = request.stream.read()
+        print(ulaw_data)
+        # make ulaw ready to be written to a file
+        wave_data = audioop.ulaw2lin(ulaw_data, 2)
 
-    # Convert ulaw data to wave format
-    wave_data = ulaw_data.decode('base64')
-    # Save wave data to a file
-    with wave.open('output.wav', 'wb') as wave_file:
-        wave_file.setnchannels(1)  # Mono
-        wave_file.setsampwidth(2)  # 16-bit
-        wave_file.setframerate(8000)  # Sample rate
-        wave_file.writeframes(wave_data)
+        # Save wave data to a file
+        with wave.open('output.wav', 'wb') as wave_file:
+            wave_file.setnchannels(1)  # Mono
+            wave_file.setsampwidth(1)  # 16-bit
+            wave_file.setframerate(8000)  # Sample rate
+            wave_file.writeframes(wave_data)
 
-    return 'Conversion successful'
+        return 'Conversion successful'
+    except Exception as e:
+        return f'Conversion failed: {str(e)}'
+
 
 
 
