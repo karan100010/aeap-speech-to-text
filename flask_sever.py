@@ -9,7 +9,7 @@ def convert_ulaw_to_wave():
     print(ulaw_data)
 
     # Convert ulaw data to wave format
-    wave_data = convert_ulaw_to_wave(ulaw_data)
+    wave_data = convert_ulaw_to_wave()
 
     # Save wave data to a file
     with wave.open('output.wav', 'wb') as wave_file:
