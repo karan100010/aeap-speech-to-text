@@ -9,6 +9,7 @@ def convert_ulaw_to_wave():
     try:
         ulaw_data = b''
         chunks = request.iter_chunks()
+        print(chunks)
         for chunk in chunks:
             ulaw_data += chunk
             print(chunk)
